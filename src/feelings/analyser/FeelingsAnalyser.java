@@ -8,6 +8,7 @@ package feelings.analyser;
 import feelings.analyser.models.CleanData;
 import feelings.analyser.models.ExtractData;
 import java.io.File;
+import feelings.analyser.views.MainView;
 
 
 /**
@@ -15,6 +16,8 @@ import java.io.File;
  * @author AdrianM
  */
 public class FeelingsAnalyser {
+
+    
 
     /**
      * @param args the command line arguments
@@ -32,6 +35,10 @@ public class FeelingsAnalyser {
         CleanData data = new CleanData("El móvil de la combinación");
         data.textToLowerCase();
         data.removeAcentos();
+        MainView mainView = new MainView();
+        mainView.setVisible(true);
+        
+        
         
     }
     
