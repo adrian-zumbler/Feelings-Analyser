@@ -62,31 +62,12 @@ public class CleanData {
         for(int j =0 ; j < auxArray.length;j++) {
             String a = auxArray[j];
             String newText = "";
-            for(int i = 0; i < a.length(); i++ ) {
-                char aux = ' ';
-                aux = a.charAt(i);
-                switch (aux) {
-                    case 'á':
-                        newText = a.replace(aux, 'a');
-                        break;
-                    case 'é':
-                        newText =  a.replace(aux, 'e');
-                        break;
-                    case 'í':
-                        newText =  a.replace(aux, 'i');
-                        break;
-                    case 'ó':
-                        newText =  a.replace(aux,'o');
-                        break;
-                    case 'ú':
-                        newText =  a.replace(aux,'u');
-                        break;
-                    default:
-                        newText = auxArray[j];
-                        break;
-                }
-            }
-            auxArray[j] = newText;
+            a = a.replace('á','a');
+            a = a.replace('é','e');
+            a = a.replace('í','i');
+            a = a.replace('ó','o');
+            a = a.replace('ú','u');
+            auxArray[j] = a;
             System.out.println(auxArray[j]);
             
             
