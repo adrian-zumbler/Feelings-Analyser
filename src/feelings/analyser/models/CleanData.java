@@ -17,6 +17,13 @@ public class CleanData {
     public CleanData(String s) {
         this.streamToClean = s;
     }
+    public CleanData() {
+        
+    }
+    
+    public void setStreamToClean(String s) {
+        this.streamToClean = s;
+    }
     
     public String textToLowerCase(String text) {
         this.text = text.toLowerCase();
@@ -26,38 +33,25 @@ public class CleanData {
         return this.streamToClean.toLowerCase();
     }
     
-    public void removeAcentos(String text) {
+    public String removeAcentos(String text) {
+        String textClean = "";
         String[] auxArray = text.split(" ");
         for(int j =0 ; j < auxArray.length;j++) {
             String a = auxArray[j];
             String newText = "";
-            for(int i = 0; i < a.length(); i++ ) {
-                char aux = a.charAt(i);
-                switch (aux) {
-                    case 'á':
-                        newText = a.replace(aux, 'a');
-                        break;
-                    case 'é':
-                        newText =  a.replace(aux, 'e');
-                        break;
-                    case 'í':
-                        newText =  a.replace(aux, 'i');
-                        break;
-                    case 'ó':
-                        newText =  a.replace(aux,'o');
-                        break;
-                    case 'ú':
-                        newText =  a.replace(aux,'u');
-                        break;    
-                }
-            }
-            auxArray[j] = newText;
-            
-            
+            a = a.replace('á','a');
+            a = a.replace('é','e');
+            a = a.replace('í','i');
+            a = a.replace('ó','o');
+            a = a.replace('ú','u');
+            auxArray[j] = a;
+            textClean += auxArray[j] + " ";
         }
+        return textClean;
         
     }
-    public void removeAcentos() {
+    public String removeAcentos() {
+        String textClean = "";
         String[] auxArray = this.streamToClean.split(" ");
         for(int j =0 ; j < auxArray.length;j++) {
             String a = auxArray[j];
@@ -68,10 +62,31 @@ public class CleanData {
             a = a.replace('ó','o');
             a = a.replace('ú','u');
             auxArray[j] = a;
-            System.out.println(auxArray[j]);
-            
+            textClean += auxArray[j];
+        }
+        return textClean;
+        
+    }
+    public String removePuntuationMarks(String text) {
+        String[] auxArray = text.split(" ");
+        String textClean   = "";
+        for(int j = 0; j < auxArray.length; j++) {
+            String a = auxArray[j];
+            a = a.replace(".","");
+            a = a.replace(",","");
+            a = a.replace("!","");
+            a = a.replace("¡","");
+            a = a.replace(":","");
+            a = a.replace(";","");
+            a = a.replace("?","");
+            a = a.replace("¿","");
+            a = a.replace("-","");
+            a = a.replace("_","");
+            auxArray[j] = a;
+            textClean += auxArray[j] + " ";
             
         }
+        return textClean;
         
     }
 }
