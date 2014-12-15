@@ -5,18 +5,115 @@
  */
 package feelings.analyser.views;
 
+import feelings.analyser.models.AnalyzerText;
+import feelings.analyser.models.CleanData;
+import feelings.analyser.models.ExtractData;
+import feelings.analyser.models.ResultDataAnalyzer;
+import java.io.File;
+import java.util.Locale;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+
 /**
  *
  * @author AdrianM
  */
 public class MainView extends javax.swing.JFrame {
+    
+       private DefaultListModel<ResultDataAnalyzer> modelList = new DefaultListModel<ResultDataAnalyzer>();
+       private ResultDataAnalyzer dataAnalyzer = null; 
+       private int auxPositive;
+       private int auxNegative;
+       DefaultPieDataset dataChart = new DefaultPieDataset();
+       private double dividendo;
+              
+        
+        public void init() {
+            ExtractData data = new ExtractData();
+            CleanData datatoClean = new CleanData();
+            String[] textAnalyzer = new String[100];
+            String textClean = "";
+            String absolutUrl = System.getProperty("user.dir");
+            File file = new File("Comentarios Mochila.txt");
+            JOptionPane.showInputDialog(this,absolutUrl +  "\\src\\assets\\Comentarios Mochila.txt" );
+            data.readFile(file);
+            AnalyzerText analyzertext = new AnalyzerText();
+            for (String a : data.getPosts()) {
+                datatoClean.setStreamToClean(a);
+                datatoClean.textToLowerCase();
+                textClean = datatoClean.removeAcentos();
+                textClean = datatoClean.removePuntuationMarks(textClean);
+                analyzertext.setPostToAnalyse(textClean);
+                analyzertext.textAnalyze();
+                dataAnalyzer = new ResultDataAnalyzer(a, analyzertext.getPositiveCount(), analyzertext.getNegativeCount());
+                modelList.addElement(dataAnalyzer);
+                System.out.println(
+                    textClean + 
+                            "Buenas: " + analyzertext.getPositiveCount() + 
+                            "Malas: " + analyzertext.getNegativeCount());
+
+
+
+
+            }
+            lstPosts.setModel(modelList);
+            lstPosts.addListSelectionListener(new ListSelectionListener() {
+
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    ResultDataAnalyzer o = new ResultDataAnalyzer();
+                    o = (ResultDataAnalyzer)lstPosts.getModel().getElementAt(e.getFirstIndex());
+                    auxPositive = o.getCountPositive();
+                    auxNegative = o.getCountNegative();
+                    dividendo = auxPositive + auxNegative;
+                    dataChart.setValue("Positivo",(auxPositive/dividendo)*10);
+                    dataChart.setValue("Negativo",(auxNegative/dividendo)*10);
+                    
+                }
+            
+            });
+            
+        }
+        
+        
+        
 
     /**
      * Creates new form MainView
      */
+    
     public MainView() {
         initComponents();
+        init();
+        
+        dataChart.setValue("Positivo",50);
+        dataChart.setValue("Negativo",50);
+        
+        JFreeChart chart = ChartFactory.createPieChart("Porcentaje",
+                dataChart,
+                true,
+                true,
+                false);
+        
+        ChartPanel chartPanel = new ChartPanel(chart);
+        javax.swing.JButton button = new JButton("hola");
+        jPanel2.add(chartPanel);
+
+        
+        
+        
+        
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,17 +124,50 @@ public class MainView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstPosts = new javax.swing.JList();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setLayout(null);
+
+        jPanel2.setLayout(new javax.swing.OverlayLayout(jPanel2));
+
+        jLabel1.setText("Analisador de sentimientos");
+
+        lstPosts.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(lstPosts);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(201, 201, 201))
         );
 
         pack();
@@ -79,5 +209,10 @@ public class MainView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList lstPosts;
     // End of variables declaration//GEN-END:variables
 }

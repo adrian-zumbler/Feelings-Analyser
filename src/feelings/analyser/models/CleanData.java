@@ -30,7 +30,13 @@ public class CleanData {
         return this.text;
     }
     public String textToLowerCase() {
-        return this.streamToClean.toLowerCase();
+        try {
+            return this.streamToClean.toLowerCase();
+        } catch(Exception ex) {
+            System.err.println(ex.getMessage());
+            return null;
+        }
+        
     }
     
     public String removeAcentos(String text) {
@@ -51,7 +57,8 @@ public class CleanData {
         
     }
     public String removeAcentos() {
-        String textClean = "";
+        try {
+            String textClean = "";
         String[] auxArray = this.streamToClean.split(" ");
         for(int j =0 ; j < auxArray.length;j++) {
             String a = auxArray[j];
@@ -62,13 +69,18 @@ public class CleanData {
             a = a.replace('ó','o');
             a = a.replace('ú','u');
             auxArray[j] = a;
-            textClean += auxArray[j];
-        }
+            textClean += auxArray[j] + " ";
+        }   
         return textClean;
+        } catch(Exception ex) {
+            return null;
+        }
+        
         
     }
     public String removePuntuationMarks(String text) {
-        String[] auxArray = text.split(" ");
+        try  {
+            String[] auxArray = text.split(" ");
         String textClean   = "";
         for(int j = 0; j < auxArray.length; j++) {
             String a = auxArray[j];
@@ -87,6 +99,10 @@ public class CleanData {
             
         }
         return textClean;
+        } catch (Exception ex ) {
+            return null;
+        }
+        
         
     }
 }

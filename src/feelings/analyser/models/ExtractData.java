@@ -29,7 +29,7 @@ public class ExtractData {
             this.file = file;
             fileInputStream = new FileInputStream(this.file);
             dataInputStream = new DataInputStream(fileInputStream);
-            br = new BufferedReader(new InputStreamReader(dataInputStream));
+            br = new BufferedReader(new InputStreamReader(dataInputStream,"UTF-8"));
             String line = "";
             while((line = br.readLine()) != null) {
                 posts[count] = line.toLowerCase();

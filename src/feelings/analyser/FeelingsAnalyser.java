@@ -7,6 +7,7 @@ package feelings.analyser;
 
 import feelings.analyser.models.CleanData;
 import feelings.analyser.models.ExtractData;
+import feelings.analyser.models.AnalyzerText;
 import java.io.File;
 import feelings.analyser.views.MainView;
 
@@ -23,20 +24,18 @@ public class FeelingsAnalyser {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        /*ExtractData data = new ExtractData();
-        File file = new File("C:\\Users\\AdrianM\\Documents\\NetBeansProjects\\Feelings Analyser\\src\\assets\\Comentarios Mochila.txt");
-        data.readFile(file);
-        for (String a : data.getPosts()) {
-            System.out.println(a);
-        }
-        char o = 'o';
-        int asci = (int) o;
-        System.out.println(asci);*/
-        CleanData data = new CleanData("El móvil de la combinación");
-        data.textToLowerCase();
-        data.removeAcentos();
-        MainView mainView = new MainView();
-        mainView.setVisible(true);
+        MainView view = new MainView();
+        view.setVisible(true);
+        
+            
+            
+            
+            
+        
+       
+       
+        
+        
         
         
         

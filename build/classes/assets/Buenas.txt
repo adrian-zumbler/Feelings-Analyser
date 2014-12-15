@@ -13,9 +13,10 @@ confortable
 divertido
 espaciosa
 enamora
-fascina
+facina
 funcional
 gusta
+gustan
 gustaria
 guste
 linda
@@ -25,6 +26,7 @@ positivo
 rara
 simple
 util
+buena
 
 
 
